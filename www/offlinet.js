@@ -213,7 +213,9 @@ Offlinet = {
 			console.log('code: ' + e.code + ', message: ' + e.message);
 		});
 	},
-	
+	initHTTPD: function () {
+		initHTTPD();
+	},
 	init: function () {
 		Offlinet.api = cordova.plugins.hotspot;
 
@@ -246,6 +248,6 @@ Offlinet = {
 		// 	Offlinet.target.cmdOutput.innerHTML = ('cmd output: ' + info.output);
 		// });
 
-		Offlinet.initDBMeter();
+		Offlinet.initHTTPD();
 	}
 };
