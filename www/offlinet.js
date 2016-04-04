@@ -218,6 +218,15 @@ Offlinet = {
 	},
 	initSketchPad: function () {
 		$(function () {
+
+			var canvas = document.createElement("canvas");
+			canvas.id = "sketchpad";
+
+			$(canvas).prependTo("body");
+
+			console.log("canvas", canvas);
+
+			var color = "#000";
 			var sketchpad = new Sketchpad({
 				element: '#sketchpad',
 				width: innerWidth,
@@ -231,9 +240,9 @@ Offlinet = {
 			});
 
 			$(".color").on("click", function(){
-				console.log("COLOR !");
+				color = '#'+((Math.random()*0xFFFFFF<<0).toString(16)+(Math.random()*0xFFFFFF<<0).toString(16)).substr(0, 6);
 
-				var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+				console.log("COLOR !", color);
 
 				sketchpad.color = color;
 				this.style.color = color;
@@ -257,7 +266,8 @@ Offlinet = {
 				sketchpad = new Sketchpad({
 					element: '#sketchpad',
 					width: innerWidth,
-					height: innerHeight
+					height: innerHeight,
+					color: color
 				});
 			});
 		});
