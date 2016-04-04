@@ -216,8 +216,35 @@ Offlinet = {
 	initHTTPD: function () {
 		initHTTPD();
 	},
+	initSketchPad: function () {
+		$(function () {
+			var sketchpad = new Sketchpad({
+				element: '#sketchpad',
+				width: innerWidth,
+				height: innerHeight
+			});
+			console.log("sketchpad", sketchpad);
+
+			$(".animate").on("click", function(){
+				console.log("ANIMATE !");
+				sketchpad.animate(12);
+			});
+
+			$(".color").on("click", function(){
+				console.log("COLOR !");
+
+				var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+
+				sketchpad.color = color;
+				this.style.color = color;
+			});
+		});
+	},
 	init: function () {
-		Offlinet.api = cordova.plugins.hotspot;
+
+		console.log("init Offlinet");
+
+		// Offlinet.api = cordova.plugins.hotspot;
 
 		// Offlinet.isConnectedToInternetViaWifi(function success(isIt) {
 		// 	Offlinet.target.isConnectedToInternetViaWifi.innerHTML = isIt;
@@ -248,6 +275,11 @@ Offlinet = {
 		// 	Offlinet.target.cmdOutput.innerHTML = ('cmd output: ' + info.output);
 		// });
 
-		Offlinet.initHTTPD();
+		// Offlinet.initHTTPD();
+		
+		Offlinet.initSketchPad();
 	}
 };
+
+
+console.log("offlinet.js");

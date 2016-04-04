@@ -26,7 +26,14 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+        if (window.cordova) {
+            document.addEventListener('deviceready', this.onDeviceReady, false);
+        } else {
+            var self = this;
+            $(function(){
+                self.onDeviceReady()
+            });
+        }
     },
     // deviceready Event Handler
     //
@@ -55,3 +62,6 @@ var app = {
 };
 
 app.initialize();
+
+
+console.log("js/index.js");
