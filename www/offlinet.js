@@ -230,8 +230,11 @@ Offlinet = {
 			var sketchpad = new Sketchpad({
 				element: '#sketchpad',
 				width: innerWidth,
-				height: innerHeight
+				height: innerHeight,
+				color: color
 			});
+
+			window.sketchpad = sketchpad;
 			console.log("sketchpad", sketchpad);
 
 			$(".animate").on("click", function(){
@@ -272,6 +275,28 @@ Offlinet = {
 			});
 		});
 	},
+	initMagneto: function () {
+		var self = this;
+		if ( ! window.cordova) {
+			console.log("Magnetometer not loaded.");
+			return;
+		}
+
+		cordova.plugins.magnetometer.getReading(
+			function success(reading){
+				var out = JSON.stringify(reading)
+				console.log(out);
+				$(".magneto").html(out);
+				// Output: {x: 23.113, y:-37.245, z:6.172, magnitude: 44.266}
+				setTimeout(function () {
+					self.initMagneto();
+				}, 1000);
+			}, 
+			function error(message){
+				console.error(message);
+			}
+		  )
+	},
 	init: function () {
 
 		console.log("init Offlinet");
@@ -310,6 +335,7 @@ Offlinet = {
 		// Offlinet.initHTTPD();
 		
 		Offlinet.initSketchPad();
+		Offlinet.initMagneto();
 	}
 };
 

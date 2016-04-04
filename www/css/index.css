@@ -172,3 +172,9 @@ h1 {
 	left: 50vw;
 	top: 3vh;
 }
+
+.magneto {
+    top: 0;
+    right: 0;
+    position: absolute;
+}

@@ -23,20 +23,20 @@
 function Sketchpad(config) {
   // Enforces the context for all functions
   for (var key in this.constructor.prototype) {
-    this[key] = this[key].bind(this);
+	this[key] = this[key].bind(this);
   }
 
   // Warn the user if no DOM element was selected
   if (!config.hasOwnProperty('element')) {
-    console.error('SKETCHPAD ERROR: No element selected');
-    return;
+	console.error('SKETCHPAD ERROR: No element selected');
+	return;
   }
 
   if (typeof(config.element) === 'string') {
-    this.element = $(config.element);
+	this.element = $(config.element);
   }
   else {
-    this.element = config.element;
+	this.element = config.element;
   }
 
   // Width can be defined on the HTML or programatically
@@ -49,18 +49,18 @@ function Sketchpad(config) {
 
   // ReadOnly sketchpads may not be modified
   this.readOnly = config.readOnly ||
-                  this.element.attr('data-readOnly') ||
-                  false;
+				  this.element.attr('data-readOnly') ||
+				  false;
   if (!this.readOnly) {
-      this.element.css({cursor: 'crosshair'});
+	  this.element.css({cursor: 'crosshair'});
   }
 
   // Stroke control variables
   this.strokes = config.strokes || [];
   this._currentStroke = {
-    color: null,
-    size: null,
-    lines: [],
+	color: null,
+	size: null,
+	lines: [],
   };
 
   // Undo History
@@ -82,8 +82,8 @@ function Sketchpad(config) {
 
 Sketchpad.prototype._cursorPosition = function(event) {
   return {
-    x: event.pageX - $(this.canvas).offset().left,
-    y: event.pageY - $(this.canvas).offset().top,
+	x: event.pageX - $(this.canvas).offset().left,
+	y: event.pageY - $(this.canvas).offset().top,
   };
 };
 
@@ -126,8 +126,8 @@ Sketchpad.prototype._mouseDown = function(event) {
 
 Sketchpad.prototype._mouseUp = function(event) {
   if (this._sketching) {
-    this.strokes.push($.extend(true, {}, this._currentStroke));
-    this._sketching = false;
+	this.strokes.push($.extend(true, {}, this._currentStroke));
+	this._sketching = false;
   }
   this.canvas.removeEventListener('mousemove', this._mouseMove);
 };
@@ -137,8 +137,8 @@ Sketchpad.prototype._mouseMove = function(event) {
 
   this._draw(this._lastPosition, currentPosition, this.color, this.penSize);
   this._currentStroke.lines.push({
-    start: $.extend(true, {}, this._lastPosition),
-    end: $.extend(true, {}, currentPosition),
+	start: $.extend(true, {}, this._lastPosition),
+	end: $.extend(true, {}, currentPosition),
   });
 
   this._lastPosition = currentPosition;
@@ -147,7 +147,7 @@ Sketchpad.prototype._mouseMove = function(event) {
 Sketchpad.prototype._touchStart = function(event) {
   event.preventDefault();
   if (this._sketching) {
-    return;
+	return;
   }
   this._lastPosition = this._cursorPosition(event.changedTouches[0]);
   this._currentStroke.color = this.color;
@@ -160,8 +160,8 @@ Sketchpad.prototype._touchStart = function(event) {
 Sketchpad.prototype._touchEnd = function(event) {
   event.preventDefault();
   if (this._sketching) {
-    this.strokes.push($.extend(true, {}, this._currentStroke));
-    this._sketching = false;
+	this.strokes.push($.extend(true, {}, this._currentStroke));
+	this._sketching = false;
   }
   this.canvas.removeEventListener('touchmove', this._touchMove);
 };
@@ -169,8 +169,8 @@ Sketchpad.prototype._touchEnd = function(event) {
 Sketchpad.prototype._touchCancel = function(event) {
   event.preventDefault();
   if (this._sketching) {
-    this.strokes.push($.extend(true, {}, this._currentStroke));
-    this._sketching = false;
+	this.strokes.push($.extend(true, {}, this._currentStroke));
+	this._sketching = false;
   }
   this.canvas.removeEventListener('touchmove', this._touchMove);
 };
@@ -178,8 +178,8 @@ Sketchpad.prototype._touchCancel = function(event) {
 Sketchpad.prototype._touchLeave = function(event) {
   event.preventDefault();
   if (this._sketching) {
-    this.strokes.push($.extend(true, {}, this._currentStroke));
-    this._sketching = false;
+	this.strokes.push($.extend(true, {}, this._currentStroke));
+	this._sketching = false;
   }
   this.canvas.removeEventListener('touchmove', this._touchMove);
 };
@@ -190,8 +190,8 @@ Sketchpad.prototype._touchMove = function(event) {
 
   this._draw(this._lastPosition, currentPosition, this.color, this.penSize);
   this._currentStroke.lines.push({
-    start: $.extend(true, {}, this._lastPosition),
-    end: $.extend(true, {}, currentPosition),
+	start: $.extend(true, {}, this._lastPosition),
+	end: $.extend(true, {}, currentPosition),
   });
 
   this._lastPosition = currentPosition;
@@ -212,7 +212,7 @@ Sketchpad.prototype.reset = function() {
   this.redraw(this.strokes);
 
   if (this.readOnly) {
-    return;
+	return;
   }
 
   // Mouse
@@ -229,23 +229,23 @@ Sketchpad.prototype.reset = function() {
 
 Sketchpad.prototype.drawStroke = function(stroke) {
   for (var j = 0; j < stroke.lines.length; j++) {
-    var line = stroke.lines[j];
-    this._draw(line.start, line.end, stroke.color, stroke.size);
+	var line = stroke.lines[j];
+	this._draw(line.start, line.end, stroke.color, stroke.size);
   }
 };
 
 Sketchpad.prototype.redraw = function(strokes) {
   for (var i = 0; i < strokes.length; i++) {
-    this.drawStroke(strokes[i]);
+	this.drawStroke(strokes[i]);
   }
 };
 
 Sketchpad.prototype.toObject = function() {
   return {
-    width: this.canvas.width,
-    height: this.canvas.height,
-    strokes: this.strokes,
-    undoHistory: this.undoHistory,
+	width: this.canvas.width,
+	height: this.canvas.height,
+	strokes: this.strokes,
+	undoHistory: this.undoHistory,
   };
 };
 
@@ -258,25 +258,25 @@ Sketchpad.prototype.animate = function(ms, loop, loopDelay) {
   var delay = ms;
   var callback = null;
   for (var i = 0; i < this.strokes.length; i++) {
-    var stroke = this.strokes[i];
-    for (var j = 0; j < stroke.lines.length; j++) {
-      var line = stroke.lines[j];
-      callback = this._draw.bind(this, line.start, line.end,
-                                 stroke.color, stroke.size);
-      this.animateIds.push(setTimeout(callback, delay));
-      delay += ms;
-    }
+	var stroke = this.strokes[i];
+	for (var j = 0; j < stroke.lines.length; j++) {
+	  var line = stroke.lines[j];
+	  callback = this._draw.bind(this, line.start, line.end,
+								 stroke.color, stroke.size);
+	  this.animateIds.push(setTimeout(callback, delay));
+	  delay += ms;
+	}
   }
   if (loop) {
-    loopDelay = loopDelay || 0;
-    callback = this.animate.bind(this, ms, loop, loopDelay);
-    this.animateIds.push(setTimeout(callback, delay + loopDelay));
+	loopDelay = loopDelay || 0;
+	callback = this.animate.bind(this, ms, loop, loopDelay);
+	this.animateIds.push(setTimeout(callback, delay + loopDelay));
   }
 };
 
 Sketchpad.prototype.cancelAnimation = function() {
   for (var i = 0; i < this.animateIds.length; i++) {
-    clearTimeout(this.animateIds[i]);
+	clearTimeout(this.animateIds[i]);
   }
 };
 
@@ -288,15 +288,15 @@ Sketchpad.prototype.undo = function() {
   this.clear();
   var stroke = this.strokes.pop();
   if (stroke) {
-    this.undoHistory.push(stroke);
-    this.redraw(this.strokes);
+	this.undoHistory.push(stroke);
+	this.redraw(this.strokes);
   }
 };
 
 Sketchpad.prototype.redo = function() {
   var stroke = this.undoHistory.pop();
   if (stroke) {
-    this.strokes.push(stroke);
-    this.drawStroke(stroke);
+	this.strokes.push(stroke);
+	this.drawStroke(stroke);
   }
 };
