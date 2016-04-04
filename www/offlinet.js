@@ -238,6 +238,28 @@ Offlinet = {
 				sketchpad.color = color;
 				this.style.color = color;
 			});
+
+			$(".undo").on("click", function(){
+				console.log("UNDO !");
+
+				sketchpad.undo();
+			});
+
+			$(".redo").on("click", function(){
+				console.log("REDO !");
+
+				sketchpad.redo();
+			});
+
+			$(".clear").on("click", function(){
+				console.log("CLEAR !");
+
+				sketchpad = new Sketchpad({
+					element: '#sketchpad',
+					width: innerWidth,
+					height: innerHeight
+				});
+			});
 		});
 	},
 	init: function () {

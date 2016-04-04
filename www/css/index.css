@@ -126,12 +126,13 @@ h1 {
 	-webkit-animation:fade 3000ms infinite;
 }
 
-.animate, .color {
+.menu button {
 	position: fixed;
 	outline: none;
 	font-size: 10vmin;
 	border: 0; /* 1vmin solid #666; */
 	background: transparent;
+	cursor: pointer;
 }
 
 .animate {
@@ -145,5 +146,26 @@ h1 {
 	width: 10vw;
 	height: 6vh;
 	left: 16vw;
+	top: 3vh;
+}
+
+.undo {
+	width: 10vw;
+	height: 6vh;
+	left: 26vw;
+	top: 3vh;
+}
+
+.redo {
+	width: 10vw;
+	height: 6vh;
+	left: 39vw;
+	top: 3vh;
+}
+
+.clear {
+	width: 10vw;
+	height: 6vh;
+	left: 50vw;
 	top: 3vh;
 }
